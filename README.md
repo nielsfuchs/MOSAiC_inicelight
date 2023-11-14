@@ -22,7 +22,7 @@ Output data is available on PANGAEA
 
 ## Further descriptions
 
-A data descriptor paper is in submission to Nature data journal.
+A data descriptor paper is in submission to Nature Scientific Data.
 
 ## Usage notes
 
