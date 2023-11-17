@@ -56,6 +56,7 @@ for station in tqdm.tqdm(station_list.iter('station')):
 
     if station_dict['buoy_type'] == 'lightharp':
         lightharp = LightRead.lightharp(station_dict)
+        lightharp = LightRead.lightharp(station_dict)
         lightharp.read_lightharp()
         lightharp.crop_timeline()
         lightharp.add_nominal_date()

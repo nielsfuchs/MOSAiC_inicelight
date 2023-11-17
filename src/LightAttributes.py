@@ -89,6 +89,14 @@ def set_variable_attributes(data):
             data[var].attrs = {'units': '1', 'long_name': 'gas volume fraction'}
         elif var == 'ice_thickness':
             data[var].attrs.update({'units': 'm', 'long_name': 'ice thickness', 'standard_name': 'sea_ice_thickness'})
+        elif var == 'ice_thickness_mean':
+            data[var].attrs.update({'units': 'm', 'long_name': 'mean ice thickness at MOSAiC site', 'standard_name': 'sea_ice_thickness'})
+        elif var == 'ice_thickness_max':
+            data[var].attrs.update({'units': 'm', 'long_name': 'maximum ice thickness at MOSAiC site'})
+        elif var == 'ice_thickness_min':
+            data[var].attrs.update({'units': 'm', 'long_name': 'minimum ice thickness at MOSAiC site'})
+        elif var == 'ice_thickness_std':
+            data[var].attrs.update({'units': 'm', 'long_name': 'standard deviation of ice thickness at MOSAiC site'})
         elif var == 'surface_melt':
             data[var].attrs.update({'units': 'm', 'long_name': 'sea ice-surface melt'})
 
@@ -97,8 +105,16 @@ def set_variable_attributes(data):
 
         elif var[:13] == 'snow_distance':
             data[var].attrs = {'units': 'meter', 'long_name': 'instruments distance to snow surface'}
-        elif var == 'snow_thickness':
-            data[var].attrs.update({'units': 'm', 'long_name': 'snow thickness', 'standard_name': 'surface snow thickness'})
+        elif var == 'snow_thickness_mean':
+            data[var].attrs.update({'units': 'm', 'long_name': 'mean snow thickness at MOSAiC site', 'standard_name': 'surface snow thickness'})
+        elif var == 'snow_thickness_min':
+            data[var].attrs.update({'units': 'm', 'long_name': 'minimum snow thickness at MOSAiC site'})
+        elif var == 'snow_thickness_max':
+            data[var].attrs.update({'units': 'm', 'long_name': 'maximum snow thickness at MOSAiC site'})
+        elif var == 'snow_thickness_std':
+            data[var].attrs.update({'units': 'm', 'long_name': 'standard deviation of snow thickness at MOSAiC site'})
+        elif var == 'snow_thickness_T62':
+            data[var].attrs.update({'units': 'm', 'long_name': 'snow thickness at buoy 2019T62', 'standard_name': 'surface snow thickness'})
 
         # electrical measurements
         elif var == 'Impedance':
@@ -211,12 +227,15 @@ def set_global_attributes(data, id, meta):
     data.attrs['date_first'] = meta['date_first']
     data.attrs['date_last'] = meta['date_last']
 
+
     if 'DOI' in meta.keys():
         data.attrs['DOI'] = meta['DOI']
     if 'data origin' in meta.keys():
         data.attrs['data_origin'] = meta['data origin']
     if 'involved scientist' in meta.keys():
         data.attrs['involved_scientist'] = meta['involved scientist']
+    if 'deployment_info' in meta.keys():
+        data.attrs['deployment_info'] = meta['deployment_info']
 
     return data
 

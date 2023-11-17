@@ -20,14 +20,14 @@ from src import LightAttributes
 
 auxiliary_data_reference = {'LM': 'auxillary_LM.nc',
                             'CO': 'auxillary_CO.nc',
-                            'L3': '2019T70_300234068705280_TS.csv',
-                            'Leg5': '2020T81_300234068708320_TS.csv'}
+                            'L3': 'auxillary_L3.nc',
+                            'Leg5': 'auxillary_Leg5.nc'}
 
 
 def convert2xarray(data, id, **kwargs):
     """ convert pandas dataframe to xarray"""
     timeaxis = np.float64(np.unique(data['nominal_date']))
-    data['nominal_date'] = np.array(mdates.num2date(data['nominal_date'])).astype('datetime64[s]')
+    data['nominal_date'] = np.array(mdates.num2date(data['nominal_date'])).astype('datetime64[ns]')
         
     if len(np.unique(data['depth'])) > 1:
         data = data.set_index(['nominal_date', 'depth'])
@@ -53,28 +53,46 @@ def convert2xarray(data, id, **kwargs):
                                           fill_value=np.nan
                                           )
         ds['lon'] = ('nominal_date', interp_lon(timeaxis))
+    if id not in ['2020R21', '2020R10']:
+        # no snow/ice auxdata for both sites
+        if id == 'lightharp1':
+            interp_melt = interpolate.interp1d(mdates.date2num(kwargs['aux']['nominal_date']),
+                                               kwargs['aux']['surface_melt_lightharp'],
+                                               bounds_error=False,
+                                               fill_value=np.nan
+                                               )
+            interp_snow = interpolate.interp1d(mdates.date2num(kwargs['aux']['nominal_date']),
+                                               kwargs['aux']['snow_thickness_T62'],
+                                               bounds_error=False,
+                                               fill_value=np.nan
+                                               )
+            ds['snow_thickness_T62'] = ('nominal_date', interp_snow(timeaxis))
+            ds['snow_thickness_T62'].attrs = kwargs['aux'].attrs
+        else:
+            interp_melt = interpolate.interp1d(mdates.date2num(kwargs['aux']['nominal_date']),
+                                               kwargs['aux']['surface_melt'],
+                                               bounds_error=False,
+                                               fill_value=np.nan
+                                               )
+        ds['surface_melt'] = ('nominal_date', interp_melt(timeaxis))
+        ds['surface_melt'].attrs = kwargs['aux'].attrs
 
-    interp_ice = interpolate.interp1d(mdates.date2num(kwargs['aux']['nominal_date']),
-                                          kwargs['aux']['ice_thickness_mean'],
-                                          bounds_error=False,
-                                          fill_value=np.nan
-                                          )
-    interp_snow = interpolate.interp1d(mdates.date2num(kwargs['aux']['nominal_date']),
-                                           kwargs['aux']['snow_thickness_mean'],
-                                           bounds_error=False,
-                                           fill_value=np.nan
-                                           )
-    interp_melt = interpolate.interp1d(mdates.date2num(kwargs['aux']['nominal_date']),
-                                           kwargs['aux']['surface_melt'],
-                                           bounds_error=False,
-                                           fill_value=np.nan
-                                           )
-    ds['ice_thickness'] = ('nominal_date', interp_ice(timeaxis))
-    ds['snow_thickness'] = ('nominal_date', interp_snow(timeaxis))
-    ds['surface_melt'] = ('nominal_date', interp_melt(timeaxis))
-    ds['ice_thickness'].attrs = kwargs['aux'].attrs
-    ds['snow_thickness'].attrs = kwargs['aux'].attrs
-    ds['surface_melt'].attrs = kwargs['aux'].attrs
+        for stat in ['mean', 'max', 'min', 'std']:
+
+            interp_ice = interpolate.interp1d(mdates.date2num(kwargs['aux']['nominal_date']),
+                                              kwargs['aux']['ice_thickness_'+stat],
+                                              bounds_error=False,
+                                              fill_value=np.nan
+                                              )
+            interp_snow = interpolate.interp1d(mdates.date2num(kwargs['aux']['nominal_date']),
+                                               kwargs['aux']['snow_thickness_'+stat],
+                                               bounds_error=False,
+                                               fill_value=np.nan
+                                               )
+            ds['ice_thickness_'+stat] = ('nominal_date', interp_ice(timeaxis))
+            ds['snow_thickness_'+stat] = ('nominal_date', interp_snow(timeaxis))
+            ds['ice_thickness_'+stat].attrs = kwargs['aux'].attrs
+            ds['snow_thickness_'+stat].attrs = kwargs['aux'].attrs
 
     return ds
 

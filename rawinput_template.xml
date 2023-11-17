@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<config>
+    <station_list>
+
+        <station id="lightharp1">
+            <long_name>lightharp1</long_name>
+            <filepath>data/raw/lightharp/Stack01/</filepath>
+            <end_date>20200718120000</end_date>
+            <vertical_offset>-0.02</vertical_offset>
+            <site>LM</site>
+            <pi>Dirk Notz</pi>
+            <pi_institute>MPI-M</pi_institute>
+            <buoy_type>lightharp</buoy_type>
+            <deployment_info>snowdepth=0.17m icethickness=1.18m icefreeboard=0.07m ice_type=SYI</deployment_info>
+        </station>
+
+        <station id="2020R10">
+            <long_name>300025060612750</long_name>
+            <filepath>data/raw/buoys/</filepath>
+            <site>CO</site>
+            <pi>Marcel Nicolaus</pi>
+            <pi_institute>AWI</pi_institute>
+            <buoy_type>radstation</buoy_type>
+            <data_origin>meereisportal (24.July 2021)</data_origin>
+            <end_date>20200323235959</end_date>
+            <vertical_offset>0.</vertical_offset>
+            <subfiles>
+                <file name="LIGHTCHAIN" type="lightchain"/>
+            </subfiles>
+            <deployment_info>snowdepth=0.07m icethickness=1.49m icefreeboard=0.28m</deployment_info>
+        </station>
+
+        <station id="2020R11">
+            <long_name>300025060613750</long_name>
+            <filepath>data/raw/buoys/</filepath>
+            <site>LM</site>
+            <pi>Marcel Nicolaus</pi>
+            <pi_institute>AWI</pi_institute>
+            <buoy_type>radstation</buoy_type>
+            <end_date>20200723000000</end_date>
+            <vertical_offset>-0.15</vertical_offset>
+            <data_origin>meereisportal (24.July 2021)</data_origin>
+            <subfiles>
+                <file name="LIGHTCHAIN" type="lightchain"/>
+            </subfiles>
+            <deployment_info>snowdepth=0.18m icethickness=1.59m icefreeboard=0.43m ice_type=SYI</deployment_info>
+        </station>
+
+        <station id="2020R21">
+            <long_name>300025060613750</long_name>
+            <filepath>data/raw/buoys/</filepath>
+            <site>Leg5</site>
+            <pi>Marcel Nicolaus</pi>
+            <pi_institute>AWI</pi_institute>
+            <buoy_type>radstation</buoy_type>
+            <vertical_offset>-0.70</vertical_offset>
+            <data_origin>Christian Katlein (AWI)</data_origin>
+            <subfiles>
+                <file name="LIGHTCHAIN" type="lightchain"/>
+            </subfiles>
+            <deployment_info>snowdepth=0.0 icethickness=0.94 icefreeboard=NaN ice_type=meltpond</deployment_info>
+        </station>
+
+        <station id="2020R12">
+            <long_name>300025060614630</long_name>
+            <filepath>data/raw/buoys/</filepath>
+            <site>L3</site>
+            <pi>Marcel Nicolaus</pi>
+            <pi_institute>AWI</pi_institute>
+            <buoy_type>radstation</buoy_type>
+            <vertical_offset>-0.1</vertical_offset>
+            <data_origin>meereisportal (24.July 2021)</data_origin>
+            <subfiles>
+                <file name="LIGHTCHAIN" type="lightchain"/>
+            </subfiles>
+            <deployment_info>snowdepth=0.08m icethickness=1.67 icefreeboard=0.17m ice_type=FYI</deployment_info>
+        </station>
+
+    </station_list>
+
+    <plot>
+
+    </plot>
+</config>
